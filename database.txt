@@ -1,0 +1,31 @@
+
+create table Account(
+id int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 10000001, INCREMENT BY 1) PRIMARY KEY, 
+customerId int  NOT NULL,
+accountType varchar(10), 
+balance numeric(30), 
+password varchar(20)
+) 
+
+alter table Account 
+add constraint bank_key foreign key (Customerid) references CustomerBank(id) 
+
+drop table account
+
+select * from account
+
+select * from customerBank
+
+delete from account;
+delete from customerbank;
+
+create table facility_payment(id int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,accountNo int NOT NULL,billType varchar(20), provider varchar(20), amount numeric(20), status boolean, timestamp varchar(20) )
+
+alter table  facility_payment
+add constraint acc_key foreign key (accountNo) references Account(id) 
+
+select * from facility_payment
+
+drop table facility_payment
+
+delete table facility_payment where 1=1;
