@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Create Account</title>
+<link rel="stylesheet" type="text/css" href="StylingCss/default.css">
+</head>
+<body>
+<div id="main">
+<h1>Provide Account Details</h1><hr /><br/> <br/>
+	<form action="acc-creation.do" method="post">
+		Account type : <input type="radio" value="Saving" name="accType"/>Saving
+		<input type="radio" value="Current" name="accType"/>Current <br/> <br/>
+		Minimum Amount : <input type="text" name="min-amount" /> <br/> <br/>
+		Password : <input type="password" name="password" /><br /><br />
+		Confirm Password : <input type="password" name="confirmpassword" /><br /><br />
+		<input type="submit" name="submit" value="submit"/>
+	</form>
+</div>
+	</body>
+</html>

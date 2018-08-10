@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Bill Payment</title>
+<script>
+	window.onload = function(){
+		document.getElementById("default").selected = true;
+	}
+</script>
+<style>
+	#main {margin:0 25% ;border: 2px solid black;padding: 20px;}
+	h1 {text-align:center;}
+</style>
+</head>
+<body>
+<div id="main">
+	<h1>Bill Payment Form </h1><hr/>
+	<form action="pay-bills.do" method="post">
+	<!--Select your Bill : <input onClick="displayOnClick();" type="radio" name="billType" value="Electric Bill"/>Electric Bill <input  onclick="displayOnClick();" type="radio" name="billType" value="Phone Bill"/>Phone Bill<br />-->
+	Select your Bill :
+	<select name="billType" id="billTypes">
+		<option value="" selected id="default"></option>
+		<option value="electric" id="electricOptn">Electric Bill</option>
+		<option value="phone" id="phoneOptn">Phone Bill</option>
+	</select><br/><br />
+	Select Provider :
+	<div id="elect" style="display:none;">
+	For Electricity Bill : 
+	<select name="eleprovider">
+		<option value="" selected class="default"></option>
+  		<option value="mseb">MSEB</option>
+  		<option value="tata">Tata</option>
+  		<option value="reliance">Reliance</option>
+	</select> 
+	</div>
+	<div id="phone" style="display:none;">
+	For Phone Bill :
+	<select name="phoneprovider">
+		<option value="" selected class="default"></option>
+  		<option value="mtnl">MTNL</option>
+  		<option value="jio">Jio</option>
+  		<option value="airtel">Airtel</option>
+  		<option value="vodafone">Vodafone</option>
+  		<option value="idea">Idea</option>  		
+	</select> 
+	</div>	
+	<br/><br />
+	Enter Amount : <input type="text" name="amount"/><br /><br />
+	<input type="submit" value="Pay" name="submit"/>
+	
+	</form>
+</div>
+<script>
+		var electric = document.getElementById("electricOptn");
+		electric.addEventListener("click", function(){
+			document.getElementById("elect").style.display="block";
+			document.getElementById("phone").style.display="none";
+		}, false);
+		
+		var phone = document.getElementById("phoneOptn");
+		phone.addEventListener("click", function(){
+			document.getElementById("elect").style.display="none";
+			document.getElementById("phone").style.display="block";
+		}, false);
+</script>
+
+</body>
+</html>
