@@ -1,0 +1,62 @@
+drop table customerbank
+
+drop table facility_payment
+
+drop table account
+
+create table customerbank (
+id int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+title varchar(5),
+firstname varchar(20),
+lastname varchar(20),
+age numeric(5),
+email varchar(20),
+dob DATE,
+CONSTRAINT primary_key PRIMARY KEY (id)
+)
+
+create table account (
+id int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 10001, INCREMENT BY 1),
+customerId int,
+accountType varchar(20),
+balance numeric(10),
+password varchar(20),
+CONSTRAINT primary_key2 PRIMARY KEY (id)
+)
+
+alter table account
+ADD CONSTRAINT acc_key FOREIGN KEY (customerId) REFERENCES customerbank(id)
+
+create table facility (
+id int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 10001, INCREMENT BY 1),
+accountId int,
+billType varchar(20),
+provider varchar(20),
+consumerId numeric(10),
+CONSTRAINT primary_key3 PRIMARY KEY (id)
+)
+
+
+drop table facility
+
+alter table facility
+ADD CONSTRAINT fac_key FOREIGN KEY (accountId) REFERENCES account(id)
+
+create table payment(
+id int NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 10001, INCREMENT BY 1),
+facilityId int,
+amount numeric(20),
+Date time,
+CONSTRAINT primary_key4 PRIMARY KEY (id)
+)
+drop table payment
+
+alter table payment
+ADD CONSTRAINT pay_key FOREIGN KEY (facilityId) REFERENCES facility(id)
+
+
+select * from CUSTOMERBANK
+
+select * from ACCOUNT
+
+select * from FACILITY

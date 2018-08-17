@@ -11,7 +11,7 @@
 </head>
 <body>
 <div id="main">
-	<h1>Bill Payment Form </h1><hr/>
+	<h1>Facility Prefrence</h1><hr/>
 	<!-- <p>Customer Id:
 		<%
 			Integer customerId = (Integer) session.getAttribute("cust_id");
@@ -26,7 +26,7 @@
 		session.setAttribute("AccNo", accNumber);
 		%>
 	</strong></p>
-	<form action="facilitiesPayment.jsp" method="GET">
+	<form action="facility.do" method="post">
 	<!--Select your Bill : <input onClick="displayOnClick();" type="radio" name="billType" value="Electric Bill"/>Electric Bill <input  onclick="displayOnClick();" type="radio" name="billType" value="Phone Bill"/>Phone Bill<br />-->
 	Select your Bill :
 	<select name="billType" id="billTypes">
@@ -37,7 +37,7 @@
 	Select Provider :
 	<div id="elect" style="display:none;">
 	For Electricity Bill : 
-	<select name="provider">
+	<select name="provider1">
 		<option value="" selected class="default"></option>
   		<option value="MSEB" class="providerOptn">MSEB</option>
   		<option value="Tata" class="providerOptn">Tata</option>
@@ -46,7 +46,7 @@
 	</div>
 	<div id="phone" style="display:none;">
 	For Phone Bill :
-	<select name="provider">
+	<select name="provider2">
 		<option value="" selected class="default"></option>
   		<option value="MTNL" class="providerOptn">MTNL</option>
   		<option value="Jio" class="providerOptn">Jio</option>
@@ -54,9 +54,10 @@
   		<option value="Vodafone" class="providerOptn">Vodafone</option>
   		<option value="Idea" class="providerOptn">Idea</option>  		
 	</select> 
-	</div>	
-	<br/><br />
-	<input type="submit" value="Submit">	
+	</div><br/><br />
+	Consumer ID : <input type="text" name="consumerId" /><br/><br />
+	<input type="submit" value="Save Prefrence"  name="submit"/>	
+	
 	</form>	
 </div>
 
