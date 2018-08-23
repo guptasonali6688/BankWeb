@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.zycus.bankapp.bo.Account;
 import com.zycus.bankapp.dao.impl.AccountDAO;
 import com.zycus.bankapp.dao.impl.CustomerDAO;
+import com.zycus.bankapp.service.impl.AccountCreationService;
 
 /**
  * Servlet implementation class AccountCreationServlet
@@ -38,7 +39,7 @@ public class AccountCreationServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		response.sendRedirect("account-creation.html");
+		response.sendRedirect("/BankWebApp/account-creation.html");
 	}
 	
 	//For checking input is empty or null
@@ -89,7 +90,7 @@ public class AccountCreationServlet extends HttpServlet {
 		
 		if(errorlist.size() > 0) {
 			out.println("<span id='error'>"+errorlist+"</span>");
-			request.getRequestDispatcher("account-creation.html").include(request, response);
+			request.getRequestDispatcher("/BankWebApp/account-creation.html").include(request, response);
 		}else {
 			
 			HttpSession session = request.getSession();
@@ -98,22 +99,19 @@ public class AccountCreationServlet extends HttpServlet {
 			
 			int customerId = CustomerDAO.getIdFromEmail(email);
 			
-			AccountDAO accDAO = new AccountDAO();
-			
-			Account account = new Account();
-			account.setCustomerId(customerId);
-			account.setAccountType(accType);
-			account.setBalance(minBalance);
-			account.setPassword(confirmpassword);
-			
-			accDAO.create(account);
+			AccountCreationService newAccount = new AccountCreationService();
+			newAccount.createAccount(new Account(customerId, accType, minBalance, confirmpassword));
 			
 			session.setAttribute("cust_id", customerId);
 			
 			out.println("<script type=\"text/javascript\">");
 		    out.println("alert('Your account creation is under processing... ');");
-		    out.println("location='acc-home.jsp';");
+		    out.println("location='/BankWebApp/login.html';");
 		    out.println("</script>");
+		    
+		    //closing the session
+		    session.removeAttribute("cust_id");
+		    session.invalidate();
 		}
 		out.close();
 	}

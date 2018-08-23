@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zycus.bankWebApp.ConnectionUtil;
 import com.zycus.bankapp.bo.Payment;
+import com.zycus.bankapp.conn.ConnectionUtil;
 import com.zycus.bankapp.dao.DAO;
 
 public class PaymentDAO implements DAO<Payment> {

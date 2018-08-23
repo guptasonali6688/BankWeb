@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zycus.bankWebApp.ConnectionUtil;
 import com.zycus.bankapp.bo.Facility;
+import com.zycus.bankapp.conn.ConnectionUtil;
 import com.zycus.bankapp.dao.DAO;
 
 public class FacilityDAO implements DAO<Facility> {

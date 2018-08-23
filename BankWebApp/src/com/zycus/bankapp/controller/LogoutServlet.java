@@ -31,7 +31,7 @@ public class LogoutServlet extends HttpServlet {
 		session.removeAttribute("cust_id");
 		session.invalidate();
 		
-		request.getRequestDispatcher("index.html").forward(request, response);
+		response.sendRedirect("/BankWebApp/index.html");
 
 	}
 

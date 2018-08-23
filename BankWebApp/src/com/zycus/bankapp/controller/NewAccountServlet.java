@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import com.zycus.bankapp.bo.Customer;
 import com.zycus.bankapp.dao.impl.CustomerDAO;
+import com.zycus.bankapp.service.impl.AccountCreationService;
+import com.zycus.bankapp.service.impl.CustomerService;
 
 /**
  * Servlet implementation class NewAccountServlet
@@ -124,21 +126,13 @@ public class NewAccountServlet extends HttpServlet {
 		}else {
 			out.println("<script type=\"text/javascript\">");
 		    out.println("alert('Your details have been saved successfully.. Provide account type');");
-		    out.println("location='account-creation.html';");
+		    out.println("location='/BankWebApp/account-creation.html';");
 		    out.println("</script>");
 		    
-		    CustomerDAO custDAO = new CustomerDAO();
-		    Customer customer = new Customer(
-		    			title, 
-		    			firstname,
-		    			lastname,
-		    			age,
-		    			email,
-		    			java.sql.Date.valueOf(dob)
-		    		);
+		    CustomerService newCustomer = new CustomerService();
+		    newCustomer.createNewUser(new Customer(title, firstname, lastname, age, email, java.sql.Date.valueOf(dob)));
 		    
-		    custDAO.create(customer);
-		    
+		    //starting the session
 		    HttpSession session = request.getSession();
 		    session.setAttribute("email", email);
 		}

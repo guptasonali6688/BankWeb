@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Pattern;
 import com.zycus.bankapp.bo.Facility;
 import com.zycus.bankapp.dao.impl.FacilityDAO;
+import com.zycus.bankapp.service.impl.FacilityService;
 
 /**
  * Servlet implementation class FacilityServlet
@@ -40,7 +41,7 @@ public class FacilityServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Integer customerId = (Integer) session.getAttribute("cust_id");
 		if(customerId == null) {
-			request.getRequestDispatcher("index.html").forward(request, response);
+			request.getRequestDispatcher("/BankWebApp/index.html").forward(request, response);
 		}
 				
 	}
@@ -61,7 +62,7 @@ public class FacilityServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Integer customerId = (Integer) session.getAttribute("cust_id");
 		if(customerId == null) {
-			response.sendRedirect("index.html");
+			response.sendRedirect("/BankWebApp/index.html");
 		}
 
 		PrintWriter out = response.getWriter();
@@ -96,31 +97,30 @@ public class FacilityServlet extends HttpServlet {
 	
 		if(errorlist.size() > 0) {
 			out.println("<span id='error'>"+errorlist+"</span>");
-			request.getRequestDispatcher("facility.jsp").include(request, response);
+			request.getRequestDispatcher("/BankWebApp/jsp/facility.jsp").include(request, response);
 		}else {
 			
 			Integer accNo = (Integer)session.getAttribute("AccNo");
-			FacilityDAO facdao = new FacilityDAO();
-			Facility facility = new Facility(accNo.intValue(), billType, provider, consumerNo);
-			facdao.create(facility);
+			
+			FacilityService facilityService = new FacilityService();
+			facilityService.createFacility(new Facility(accNo.intValue(), billType, provider, consumerNo));
 			
 			out.println("<script type=\"text/javascript\">");
 		    out.println("alert('Your prefrence have been added successfully... ');");
 		    out.println("</script>");
 		    System.out.println(accNo);
 		    
-		    out.println("<a href='facility.jsp'>Add a new Preference ?</a><br/><br/>"); 
+		    out.println("<a href='/BankWebApp/jsp/facility.jsp'>Add a new Preference ?</a><br/><br/>"); 
 		    
-		    List<Facility> faclist = FacilityDAO.getDataFromAccNo(accNo);
+		    List<Facility> faclist = FacilityService.getFacilityFromAccountNo(accNo);
 	
-		    //Iterator<Facility> it= faclist.iterator();
 		    out.println("<table>");
 		    out.println("<tr><td>Facility ID</td><td>Bill Type</td><td>Provider</td><td>Consumer ID</td><td></td></tr>");
 			if(faclist != null) {
 				for(Facility fac: faclist){
 					
 					out.println("<tr><td>"+fac.getId()+"</td><td>"+fac.getBillType()+"</td>");
-					out.println("<td>"+fac.getProvider()+"</td><td>"+fac.getConsumerNo()+"</td><td><a href='pay.jsp?id="+fac.getId()+"'>Pay</a></td>");
+					out.println("<td>"+fac.getProvider()+"</td><td>"+fac.getConsumerNo()+"</td><td><a href='/BankWebApp/jsp/pay.jsp?id="+fac.getId()+"'>Pay</a></td>");
 					out.println("</tr>");
 				} 
 			}else {

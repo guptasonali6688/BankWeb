@@ -11,19 +11,27 @@ public class Account {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
-	public Account(int id, int customerId, String accountType, float balance) {
+	public Account(int customerId, String accountType, float balance, String password) {
+		super();
+		this.customerId = customerId;
+		this.accountType = accountType;
+		this.balance = balance;
+		this.password = password;
+	}
+
+	public Account(int id, int customerId, String accountType, float balance, String password) {
 		super();
 		this.id = id;
 		this.customerId = customerId;
 		this.accountType = accountType;
 		this.balance = balance;
-	}
-
-	public Account(int id, int customerId, String accountType, float balance, String password) {
-		this(id, customerId, accountType, balance);
 		this.password = password;
 	}
+
+
 
 	public int getId() {
 		return id;

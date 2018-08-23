@@ -18,6 +18,8 @@ import com.zycus.bankapp.bo.Account;
 import com.zycus.bankapp.bo.Payment;
 import com.zycus.bankapp.dao.impl.AccountDAO;
 import com.zycus.bankapp.dao.impl.PaymentDAO;
+import com.zycus.bankapp.service.impl.AccountCreationService;
+import com.zycus.bankapp.service.impl.PaymentService;
 
 import sun.rmi.server.Dispatcher;
 
@@ -43,7 +45,7 @@ public class PaymentServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Integer customerId = (Integer) session.getAttribute("cust_id");
 		if(customerId == null) {
-			request.getRequestDispatcher("index.html").forward(request, response);
+			request.getRequestDispatcher("/BankWebApp/index.html").forward(request, response);
 		}
 	}
 
@@ -63,7 +65,7 @@ public class PaymentServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Integer customerId = (Integer) session.getAttribute("cust_id");
 		if(customerId == null) {
-			response.sendRedirect("index.html");
+			response.sendRedirect("/BankWebApp/index.html");
 		}
 		
 		PrintWriter out = response.getWriter();
@@ -87,30 +89,31 @@ public class PaymentServlet extends HttpServlet {
 		}
 		if(errorlist.size() > 0) {
 			out.println("<span id='error'>"+errorlist+"</span>");
-			request.getRequestDispatcher("pay.jsp").include(request, response);
+			request.getRequestDispatcher("/BankWebApp/jsp/pay.jsp").include(request, response);
 		}else {
 			
 			Integer accNo = (Integer)session.getAttribute("AccNo");
 			System.out.println(accNo);
-			AccountDAO accdao = new AccountDAO();
+			AccountCreationService accountService = new AccountCreationService();
 			Account acc = new Account();
-			acc = accdao.findById(accNo.intValue());
-			RequestDispatcher rd = request.getRequestDispatcher("pay.jsp?id="+facId);
+			
+			acc = accountService.findByAccountId(accNo.intValue());
+			RequestDispatcher rd = request.getRequestDispatcher("/jsp/pay.jsp?id="+facId);
 			if(acc != null) {
 				float balance = acc.getBalance();
 				if(balance < amount) {
+					//request.setAttribute("error", "<span id='error'>Insufficient Balance, as your current balance is "+acc.getBalance()+"</span>");
 					out.println("<span id='error'>Insufficient Balance, as your current balance is "+acc.getBalance()+"</span>");
 					rd.include(request, response);
 				}else {
 					float tempamt = balance - amount;
 					if(tempamt > 0) {
-						PaymentDAO paydao = new PaymentDAO();
-						paydao.create(new Payment(facId, amount, time));
-						
-						accdao.updateBalance(tempamt, accNo.intValue());
+						PaymentService payService = new PaymentService();
+						payService.createPayment(new Payment(facId, amount, time));					
+						accountService.updateAccountBalance(tempamt, accNo.intValue());
 						out.println("<script type=\"text/javascript\">");
 					    out.println("alert('Your payment successfully done... ');");
-					    out.println("location='acc-home.jsp';");
+					    out.println("location='/BankWebApp/jsp/acc-home.jsp';");
 					    out.println("</script>");
 					    
 					   // RequestDispatcher rd = request.getRequestDispatcher("facility.jsp");

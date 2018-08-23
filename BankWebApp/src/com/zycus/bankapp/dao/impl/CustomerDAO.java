@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
-import com.zycus.bankWebApp.ConnectionUtil;
 import com.zycus.bankapp.bo.Customer;
+import com.zycus.bankapp.conn.ConnectionUtil;
 import com.zycus.bankapp.dao.DAO;
 
 public class CustomerDAO implements DAO<Customer>{

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.zycus.bankapp.bo.Account;
 import com.zycus.bankapp.dao.impl.AccountDAO;
+import com.zycus.bankapp.service.impl.AccountCreationService;
 
 /**
  * Servlet implementation class LoginServlet
@@ -59,12 +60,12 @@ public class LoginServlet extends HttpServlet {
 		
 		if(errorlist.size() > 0) {
 			out.println("<span id='error'>"+errorlist+"</span>");
-			request.getRequestDispatcher("login.html").include(request, response);
+			request.getRequestDispatcher("/login.html").include(request, response);
 		}else {
-			
-			AccountDAO accdao = new AccountDAO();
+			AccountCreationService accountService = new AccountCreationService();
+
 			Account account = new Account();
-			account = accdao.findById(accNo);
+			account = accountService.findByAccountId(accNo);
 			
 			if(account != null) {
 				System.out.println(account.toString());
@@ -74,15 +75,15 @@ public class LoginServlet extends HttpServlet {
 					
 					out.println("<script type=\"text/javascript\">");
 				    out.println("alert('You successfully logged in... ');");
-				    out.println("location='acc-home.jsp';");
+				    out.println("location='/BankWebApp/jsp/acc-home.jsp';");
 				    out.println("</script>");		
 				}else {
 					out.println("Invalid password.. Try Again");
-					request.getRequestDispatcher("login.html").include(request, response);
+					request.getRequestDispatcher("/login.html").include(request, response);
 				}
 			}else {
 				out.println("Try Again.. No such Account is found");
-				request.getRequestDispatcher("login.html").include(request, response);
+				request.getRequestDispatcher("/login.html").include(request, response);
 			}
 		}
 		
