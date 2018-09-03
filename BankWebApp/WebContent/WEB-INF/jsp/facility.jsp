@@ -1,4 +1,3 @@
-<%@page import="com.zycus.bankWebApp.AccountDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -6,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Facility</title>
-<link rel="stylesheet" type="text/css" href="StylingCss/default.css">
+<link rel="stylesheet" type="text/css" href="../StylingCss/default.css">
 <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
@@ -15,14 +14,14 @@
 	<%
 		Integer customerId = (Integer) session.getAttribute("cust_id");
 		if(customerId == null) {
-			response.sendRedirect("index.html");
+			response.sendRedirect("/BankWebApp/index.html");
 		}
 	%>
 	<p><strong>
 		Account Number : <%= request.getSession().getAttribute("AccNo") %>
 
 	</strong></p>
-	<form action="facility.do" method="post">
+	<form action="/BankWebApp/facility.do" method="post">
 	<!--Select your Bill : <input onClick="displayOnClick();" type="radio" name="billType" value="Electric Bill"/>Electric Bill <input  onclick="displayOnClick();" type="radio" name="billType" value="Phone Bill"/>Phone Bill<br />-->
 	Select your Bill :
 	<select name="billType" id="billTypes">

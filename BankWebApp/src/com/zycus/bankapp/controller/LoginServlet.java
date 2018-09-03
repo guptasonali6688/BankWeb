@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 		String accNostr = request.getParameter("accNo");
 		String password = request.getParameter("password");
 		int accNo = 0;
+		RequestDispatcher rd = request.getRequestDispatcher("/login.html");
 		
 		if(checkInput(accNostr, "Account ID") & checkInput(password, "Password")) {
 			if(!Pattern.matches("[0-9]+", accNostr)){
@@ -74,16 +76,18 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("cust_id", account.getCustomerId());
 					
 					out.println("<script type=\"text/javascript\">");
-				    out.println("alert('You successfully logged in... ');");
-				    out.println("location='/BankWebApp/jsp/acc-home.jsp';");
-				    out.println("</script>");		
+				    out.println("alert('You successfully logged in... ');");   
+				    out.println("</script>");
+				    
+				    response.sendRedirect("user/home");
+				    //request.getRequestDispatcher("home").forward(request, response);
 				}else {
 					out.println("Invalid password.. Try Again");
-					request.getRequestDispatcher("/login.html").include(request, response);
+					rd.include(request, response);
 				}
 			}else {
 				out.println("Try Again.. No such Account is found");
-				request.getRequestDispatcher("/login.html").include(request, response);
+				rd.include(request, response);
 			}
 		}
 		

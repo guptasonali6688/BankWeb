@@ -1,5 +1,5 @@
-<%@page import="com.zycus.bankWebApp.Facility"%>
-<%@page import="com.zycus.bankWebApp.FacilityDAO"%>
+<%@page import="com.zycus.bankapp.dao.impl.*"%>
+<%@page import="com.zycus.bankapp.bo.*"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,18 +7,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Payment Details</title>
-<link rel="stylesheet" type="text/css" href="StylingCss/default.css">
+<link rel="stylesheet" type="text/css" href="../StylingCss/default.css">
 </head>
 <body>
 	<%
 		Integer customerId = (Integer) session.getAttribute("cust_id");
 		if(customerId == null) {
-			response.sendRedirect("index.html");
+			response.sendRedirect("/BankWebApp/index.html");
 		}
 	%>
 	<div id="main">
 	<h2>Payment Details</h2><hr /><br />
-		<form action="payment.do" method="post">
+		<form action="/BankWebApp/payment.do" method="post">
 			Facility-Id: <input type="text" name="facId" value="<%= request.getParameter("id") %>" readonly /><br/><br/>
 			<%
 				FacilityDAO facdao = new FacilityDAO();

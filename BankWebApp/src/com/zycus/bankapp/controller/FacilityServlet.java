@@ -97,7 +97,7 @@ public class FacilityServlet extends HttpServlet {
 	
 		if(errorlist.size() > 0) {
 			out.println("<span id='error'>"+errorlist+"</span>");
-			request.getRequestDispatcher("/BankWebApp/jsp/facility.jsp").include(request, response);
+			request.getRequestDispatcher("/BankWebApp/user/add-facility").include(request, response);
 		}else {
 			
 			Integer accNo = (Integer)session.getAttribute("AccNo");

@@ -1,4 +1,6 @@
-<%@page import="com.zycus.bankWebApp.*"%>
+<%@page import="com.zycus.bankapp.service.impl.FacilityService"%>
+<%@page import="com.zycus.bankapp.bo.*"%>
+<%@page import="com.zycus.bankapp.dao.impl.*"%>
 <%@page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -7,28 +9,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>View Facility Prefrence</title>
-<link rel="stylesheet" type="text/css" href="StylingCss/default.css">
+<link rel="stylesheet" type="text/css" href="../StylingCss/default.css">
 </head>
 <body>
 	<%
 		Integer customerId = (Integer) session.getAttribute("cust_id");
 		if(customerId == null) {
-			request.getRequestDispatcher("index.html").forward(request, response);
+			request.getRequestDispatcher("/BankWebApp/index.html").forward(request, response);
 		}
 	%>
 	<div id="main">
 	<h2>List of Facility prefrences</h2><hr/>
 		<%
 			int accNo = (Integer)session.getAttribute("AccNo");
-		
-			List<Facility> faclist = FacilityDAO.getDataFromAccNo(accNo);
+			List<Facility> faclist = FacilityService.getFacilityFromAccountNo(accNo);
 			out.println("<table>");
 		    out.println("<tr><td>Facility ID</td><td>Bill Type</td><td>Provider</td><td>Consumer ID</td><td></td></tr>");
 			if(faclist != null) {
 				for(Facility fac: faclist){
 					
 					out.println("<tr><td>"+fac.getId()+"</td><td>"+fac.getBillType()+"</td>");
-					out.println("<td>"+fac.getProvider()+"</td><td>"+fac.getConsumerNo()+"</td><td><a href='pay.jsp?id="+fac.getId()+"'>Pay</a></td>");
+					out.println("<td>"+fac.getProvider()+"</td><td>"+fac.getConsumerNo()+"</td><td><a href='/BankWebApp/jsp/pay.jsp?id="+fac.getId()+"'>Pay</a></td>");
 					out.println("</tr>");
 				} 
 			}else {
